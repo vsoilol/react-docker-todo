@@ -3,36 +3,57 @@ import {Todo} from "../../models/Todo";
 import {TodoItem} from "../todo-item";
 import {TodoForm} from "../todo-form";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
-import {addTodo, completeTodo, removeTodo, updateTodo} from "../../features/todos/todosSlice";
+import {
+    useAddTodoMutation,
+    useEditTodoMutation,
+    useGetTodosQuery, useLazyGetTodoByIdQuery,
+    useRemoveTodoMutation
+} from "../../app/services/todos";
 
 export const TodoList = () => {
+    const {data: todos} = useGetTodosQuery()
+    const [addNewTodo] = useAddTodoMutation()
+    const [updateTodo] = useEditTodoMutation()
+    const [removeTodo] = useRemoveTodoMutation()
+    const [getTodoById, { data: todo }] = useLazyGetTodoByIdQuery()
     const dispatch = useAppDispatch();
-    const { todos } = useAppSelector(state => state.todos);
 
     const handleAddTodo = (todo: Todo) => {
-        if (!todo.text || /^\s*$/.test(todo.text)) {
+        if (!todo.text || /^\s*$/.test(todo.text) || !todos) {
             return;
         }
 
-        dispatch(addTodo(todo));
+        const todoMaxId = todos.reduce(
+            (prev, current) => {
+                return prev.id > current.id ? prev : current
+            }
+        )
+
+        todo.id = todoMaxId.id + 1;
+
+        addNewTodo(todo)
     };
 
-    const handleUpdateTodo = (todoId: number, newValue: Todo) => {
-        if (!newValue.text || /^\s*$/.test(newValue.text)) {
+    const handleUpdateTodo = (todoId: number, updatedTodo: Todo) => {
+        if (!updatedTodo.text || /^\s*$/.test(updatedTodo.text)) {
             return;
         }
 
-        newValue.id = todoId;
+        updatedTodo.id = todoId;
 
-        dispatch(updateTodo(newValue));
+        updateTodo(updatedTodo)
     };
 
     const handleRemoveTodo = (id: number) => {
-        dispatch(removeTodo(id));
+        removeTodo(id)
     };
 
     const handleCompleteTodo = (id: number) => {
-        dispatch(completeTodo(id));
+        getTodoById(id).unwrap().then(_ => {
+            const updatedTodo = {..._};
+            updatedTodo.isComplete = !updatedTodo.isComplete;
+            updateTodo(updatedTodo)
+        });
     };
 
     return (
@@ -40,7 +61,7 @@ export const TodoList = () => {
             <h1>What's the Plan for Today?</h1>
             <TodoForm onSubmit={handleAddTodo} />
             <TodoItem
-                todos={todos}
+                todos={todos ? todos : []}
                 completeTodo={handleCompleteTodo}
                 removeTodo={handleRemoveTodo}
                 updateTodo={handleUpdateTodo}

@@ -1,0 +1,24 @@
+{
+  "todos": [
+    {
+      "id": 3,
+      "text": "Hello bitch",
+      "isComplete": true
+    },
+    {
+      "id": 5,
+      "text": "New 2",
+      "isComplete": false
+    },
+    {
+      "id": 6,
+      "text": "File 1",
+      "isComplete": false
+    },
+    {
+      "id": 7,
+      "text": "New 3",
+      "isComplete": true
+    }
+  ]
+}

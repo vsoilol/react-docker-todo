@@ -1,0 +1,3 @@
+build   = docker build -t react-json-server .
+run     = docker run -d --rm -p 3000:3000 -p 8000:8000 -v "$(pwd)/data:/app/data" --name container-react-json-server react-json-server
+stop    = docker stop container-react-json-server
