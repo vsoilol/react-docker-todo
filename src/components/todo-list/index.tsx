@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {Todo} from "../../models/Todo";
 import {TodoItem} from "../todo-item";
 import {TodoForm} from "../todo-form";
@@ -15,7 +15,7 @@ export const TodoList = () => {
     const [addNewTodo] = useAddTodoMutation()
     const [updateTodo] = useEditTodoMutation()
     const [removeTodo] = useRemoveTodoMutation()
-    const [getTodoById, { data: todo }] = useLazyGetTodoByIdQuery()
+    const [getTodoById, {data: todo}] = useLazyGetTodoByIdQuery()
     const dispatch = useAppDispatch();
 
     const handleAddTodo = (todo: Todo) => {
@@ -23,13 +23,13 @@ export const TodoList = () => {
             return;
         }
 
-        const todoMaxId = todos.reduce(
+        const todoMaxId = todos.length > 0 ? todos.reduce(
             (prev, current) => {
                 return prev.id > current.id ? prev : current
             }
-        )
+        ).id : 1
 
-        todo.id = todoMaxId.id + 1;
+        todo.id = todoMaxId + 1;
 
         addNewTodo(todo)
     };
@@ -58,8 +58,8 @@ export const TodoList = () => {
 
     return (
         <>
-            <h1>What's the Plan for Today?</h1>
-            <TodoForm onSubmit={handleAddTodo} />
+            <h1>Какой план на сегодня?</h1>
+            <TodoForm onSubmit={handleAddTodo}/>
             <TodoItem
                 todos={todos ? todos : []}
                 completeTodo={handleCompleteTodo}

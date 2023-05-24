@@ -33,7 +33,7 @@ export const TodoItem = ({todos, completeTodo, removeTodo, updateTodo}: Props<To
                     className={todo.isComplete ? 'todo-row complete' : 'todo-row'}
                     key={index}
                 >
-                    <div key={todo.id} onClick={() => completeTodo(todo.id)}>
+                    <div key={todo.id} onClick={() => completeTodo(todo.id)} style={{cursor: "pointer"}}>
                         {todo.text}
                     </div>
                     <div className='icons'>

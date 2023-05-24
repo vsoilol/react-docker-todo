@@ -25,9 +25,9 @@ export const TodoForm = ({todo, onSubmit}: Props<Todo>) => {
         e.preventDefault();
 
         onSubmit({
-            id: Math.floor(Math.random() * 10000),
+            id: 0,
             text: input,
-            isComplete: false
+            isComplete: todo?.isComplete ?? false
         });
         setInput('');
     };
@@ -37,7 +37,7 @@ export const TodoForm = ({todo, onSubmit}: Props<Todo>) => {
             {todo ? (
                 <>
                     <input
-                        placeholder='Update your item'
+                        placeholder='Обновить задачу'
                         value={input}
                         onChange={handleChange}
                         name='text'
@@ -45,13 +45,13 @@ export const TodoForm = ({todo, onSubmit}: Props<Todo>) => {
                         className='todo-input edit'
                     />
                     <button onClick={handleSubmit} className='todo-button edit'>
-                        Update
+                        Обновить
                     </button>
                 </>
             ) : (
                 <>
                     <input
-                        placeholder='Add a todo'
+                        placeholder='Добавить задание'
                         value={input}
                         onChange={handleChange}
                         name='text'
@@ -59,7 +59,7 @@ export const TodoForm = ({todo, onSubmit}: Props<Todo>) => {
                         ref={inputRef}
                     />
                     <button onClick={handleSubmit} className='todo-button'>
-                        Add todo
+                        Добавить задачу
                     </button>
                 </>
             )}

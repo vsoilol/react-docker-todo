@@ -43,8 +43,10 @@
   "private": true,
   "scripts": {
     "start": "react-scripts start",
-    "json-server": "json-server --watch data/db.json --host 0.0.0.0 --port 8000",
-    "docker-start": "concurrently \"npm run json-server\" \"npm run start\"",
+    "json-server-local": "json-server --watch data/db.json --port 8000",
+    "json-server-docker": "json-server --watch data/db.json --host 0.0.0.0 --port 8000",
+    "docker-start": "concurrently \"npm run json-server-docker\" \"npm run start\"",
+    "local-start": "concurrently \"npm run json-server-local\" \"npm run start\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

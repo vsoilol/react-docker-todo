@@ -1,24 +1,19 @@
 {
   "todos": [
     {
+      "id": 2,
+      "text": "Задача 1",
+      "isComplete": false
+    },
+    {
       "id": 3,
-      "text": "Hello bitch",
+      "text": "Задача 2",
       "isComplete": true
     },
     {
-      "id": 5,
-      "text": "New 2",
+      "id": 4,
+      "text": "Задача 3",
       "isComplete": false
-    },
-    {
-      "id": 6,
-      "text": "File 1",
-      "isComplete": false
-    },
-    {
-      "id": 7,
-      "text": "New 3",
-      "isComplete": true
     }
   ]
 }
